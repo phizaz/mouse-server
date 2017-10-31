@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>Test Controller</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Test if it is working!</h1>
+
+        <table>
+            <tr>
+                <td></td>
+                <td>
+                    <button id="up" class="btn btn-default" onmousedown="startHold(up)" onmouseup="endHold(up)">UU</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="left" class="btn btn-default" onclick="left()">LL</button>
+                </td>
+                <td>
+                    <button id="down" class="btn btn-default" onclick="down()">DD</button>
+                </td>
+                <td>
+                    <button id="right" class="btn btn-default" onclick="right()">RR</button>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td>
+                    <button id="lclick" class="btn btn-default" onclick="leftClick()">LC</button>
+                </td>
+                <td></td>
+                <td>
+                    <button id="rclick" class="btn btn-default" onclick="rightClick()">RC</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function moveBy(x, y) {
+            console.log(`request (${x}, ${y})`)
+            $.post('move-by', { x, y }, () => {
+                console.log(`okay (${x}, ${y})`)
+            })
+        }
+
+        function leftClick() {
+            console.log('request left-click')
+            $.post('left-click', () => {
+                console.log('okay')
+            })
+        }
+
+        function rightClick() {
+            console.log('request right-click')
+            $.post('right-click', () => {
+                console.log('okay')
+            })
+        }
+
+        const dist = 10
+
+        function up() {
+            moveBy(0, -dist * 2 / 3)
+        }
+
+        function down() {
+            moveBy(0, dist * 2 / 3)
+        }
+
+        function left() {
+            moveBy(-dist, 0)
+        }
+
+        function right() {
+            moveBy(dist, 0)
+        }
+
+        let intv = null
+        const interval = 33
+
+        function startHold(fn) {
+            console.log('start hold', fn)
+
+            if (intv) {
+                clearInterval(intv)
+                intv = null
+            }
+
+            fn()
+            intv = setInterval(() => {
+                console.log('fire')
+                fn()
+            }, interval)
+        }
+
+        function endHold(fn) {
+            console.log('end hold', fn)
+            if (intv) {
+                clearInterval(intv)
+                intv = null
+            }
+        }
+
+        $(function () {
+            const a = [
+                {
+                    id: 'up',
+                    fn: up
+                },
+                {
+                    id: 'left',
+                    fn: left
+                },
+                {
+                    id: 'down',
+                    fn: down
+                },
+                {
+                    id: 'right',
+                    fn: right
+                },
+                {
+                    id: 'lclick',
+                    fn: leftClick
+                },
+            ]
+
+
+            for (const each of a) {
+                // $(`#${each.id}`).tap(function (e) {
+                //     e.preventDefault()
+                // })
+                $(`#${each.id}`).bind('touchstart mousedown mouseover', function (e) {
+                    startHold(each.fn)
+                })
+                $(`#${each.id}`).bind('touchend mouseup mouseout', function (e) {
+                    endHold(each.fn)
+                })
+            }
+        })
+    </script>
+
+
+    <div class="container">
+        <h1>Mouse Server API v1.0
+            <small>revised date: 31 Oct 2017</small>
+        </h1>
+
+        <h2>To Control the mouse</h2>
+
+        <h3>POST /move-to</h3>
+        <p>Input: x, y</p>
+        <p>Return: none</p>
+        <p>
+            move the cursor to a designated position (x, y)
+        </p>
+
+        <h3>POST /move-by</h3>
+        <p>Input: x, y</p>
+        <p>Return: none</p>
+        <p>
+            move the cursor by a given distance along the axes x, y
+        </p>
+
+        <h3>POST /left-click</h3>
+        <p>Input: none</p>
+        <p>Return: none</p>
+        <p>
+            perform the left click
+        </p>
+
+        <h3>POST /right-click</h3>
+        <p>Input: none</p>
+        <p>Return: none</p>
+        <p>
+            perform the right click
+        </p>
+
+    </div>
+
+</body>
+
+</html>
