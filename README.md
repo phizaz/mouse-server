@@ -78,6 +78,8 @@ You can try by accessing `http://<ip>:<port>/`, it has a nice testing page check
 
 ## API List
 
+Always use header `Content-Type: application/x-www-form-urlencoded` for makeing any POST requests.
+
 ### POST /move-to
 
 ```
