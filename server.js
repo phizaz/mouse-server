@@ -59,7 +59,7 @@ app.post('/keyboard-left',function(req,res){
 	res.end();
 });
 
-app.post('/keyboard-rigtht',function(req,res){
+app.post('/keyboard-right',function(req,res){
 	console.log("keboard right");
 	robot.keyTap("d");
 	res.end();
