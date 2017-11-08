@@ -45,25 +45,25 @@ app.post('/keyTap-up',function(req,res){
 	console.log("keyTap up")
 	robot.keyTap("W")
 	res.end()
-});
+})
 
 app.post('/keyTap-down',function(req,res){
 	console.log("keyTap down")
 	robot.keyTap("S")
 	res.end()
-});
+})
 
 app.post('/keyTap-left',function(req,res){
 	console.log("keyTap left")
 	robot.keyTap("A")
 	res.end()
-});
+})
 
 app.post('/keyTap-right',function(req,res){
 	console.log("keyTap right")
 	robot.keyTap("D")
 	res.end()
-});
+})
 
 app.post('/keyTap-space',function(req,res){
     console.log("keyTap space")
@@ -153,7 +153,7 @@ app.post('/keyHold-ctrl',function(req,res){
 })
 
 
-
+    
 // listen
 const port = 3000;
 app.listen(port, () => {
