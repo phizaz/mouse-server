@@ -10,6 +10,9 @@ app.use(parser.urlencoded({ extended: true }))
 app.use('/', express.static('public'))
 
 
+var RClick_state = "up";
+var LClick_state = "up";
+
 // mouse
 app.post('/move-to', (req, res) => {
     const { x, y } = req.body
@@ -33,15 +36,16 @@ app.post('/left-click', (req, res) => {
     res.end()
 })
 
-app.post('/left-clickDown',function(req,res){
-    console.log('left click down')
-    robot.mouseToggle("down","left")
-    res.end()
-})
-
-app.post('/left-clickUp',function(req,res){
-    console.log('left click up')
-    robot.mouseToggle("up","left")
+app.post('/left-clickToggle',function(req,res){
+    if(LClick_state === "up"){
+        console.log('left click down')
+        robot.mouseToggle("down","left")
+        LClick_state = "down"
+    }else if(LClick_state === "down"){
+        console.log('left click up')
+        robot.mouseToggle("up","left")
+        LClick_state = "up"
+    }
     res.end()
 })
 
@@ -51,40 +55,57 @@ app.post('/right-click', (req, res) => {
     res.end()
 })
 
-app.post('/right-clickDown',function(req,res){
-    console.log('right click down')
-    robot.mouseToggle("down","right");
+app.post('/right-clickToggle',function(req,res){
+    if(RClick_state === "up"){
+        console.log('right click down')
+        robot.mouseToggle("down","right")
+        RClick_state = "down"
+    }else if(RClick_state === "down"){
+        console.log('right click up')
+        robot.mouseToggle("up","right")
+        RClick_state = "up"
+    }
     res.end()
 })
 
 app.post('/right-clickUp',function(req,res){
-    console.log('right click up')
-    robot.mouseToggle("up","right")
+    
     res.end()
 })
 
 
+// set toggle variable
+
+var W_state = "up";
+var S_state = "up";
+var A_state = "up";
+var D_state = "up";
+var space_state = "up";
+var ctrl_state = "up";
+var shift_state = "up";
+
+
 // keyboard
-app.post('/keyTap-up',function(req,res){
-	console.log("keyTap up")
+app.post('/keyTap-W',function(req,res){
+	console.log("keyTap W")
 	robot.keyTap("W")
 	res.end()
 })
 
-app.post('/keyTap-down',function(req,res){
-	console.log("keyTap down")
+app.post('/keyTap-S',function(req,res){
+	console.log("keyTap S")
 	robot.keyTap("S")
 	res.end()
 })
 
-app.post('/keyTap-left',function(req,res){
-	console.log("keyTap left")
+app.post('/keyTap-A',function(req,res){
+	console.log("keyTap A")
 	robot.keyTap("A")
 	res.end()
 })
 
-app.post('/keyTap-right',function(req,res){
-	console.log("keyTap right")
+app.post('/keyTap-D',function(req,res){
+	console.log("keyTap D")
 	robot.keyTap("D")
 	res.end()
 })
@@ -108,74 +129,97 @@ app.post('/keyTap-ctrl',function(req,res){
 })
 
 
-app.post('/keyHold-up',function(req,res){
-    console.log("Hold key-up for",req.body.holdTime,"ms")
-    robot.keyToggle("W","down")
-    setTimeout(function(){
+app.post('/keyToggle-W',function(req,res){
+    if(W_state === "up"){
+        console.log("key-W down")
+        robot.keyToggle("W","down")
+        W_state = "down"
+    }else if(W_state === "down"){
+        console.log("key-W up")
         robot.keyToggle("W","up")
-    },req.body.holdTime)
+        W_state = "up"
+    }
     res.end()
 })
 
-app.post('/keyHold-down',function(req,res){
-    console.log("Hold key-down for",req.body.holdTime,"ms")
-    robot.keyToggle("S","down")
-    setTimeout(function(){
+
+app.post('/keyToggle-S',function(req,res){
+    if(S_state === "up"){
+        console.log("key-S down")
+        robot.keyToggle("S","down")
+        S_state = "down"
+    }else if(S_state === "down"){
+        console.log("key-S up")
         robot.keyToggle("S","up")
-    },req.body.holdTime)
+        S_state = "up"
+    }
     res.end()
 })
 
-
-app.post('/keyHold-left',function(req,res){
-    console.log("Hold key-left for",req.body.holdTime,"ms")
-    robot.keyToggle("A","down")
-    setTimeout(function(){
+app.post('/keyToggle-A',function(req,res){
+    if(A_state === "up"){
+        console.log("key-A down")
+        robot.keyToggle("A","down")
+        A_state = "down"
+    }else if(A_state === "down"){
+        console.log("key-A up")
         robot.keyToggle("A","up")
-    },req.body.holdTime)
+        A_state = "up"
+    }
     res.end()
 })
 
-
-app.post('/keyHold-right',function(req,res){
-    console.log("Hold key-right for",req.body.holdTime,"ms")
-    robot.keyToggle("D","down")
-    setTimeout(function(){
+app.post('/keyToggle-D',function(req,res){
+    if(D_state === "up"){
+        console.log("key-D down")
+        robot.keyToggle("D","down")
+        D_state = "down"
+    }else if(D_state === "down"){
+        console.log("key-D up")
         robot.keyToggle("D","up")
-    },req.body.holdTime)
+        D_state = "up"
+    }
     res.end()
 })
 
-
-app.post('/keyHold-space',function(req,res){
-    console.log("Hold key-space for",req.body.holdTime,"ms")
-    robot.keyToggle("space","down")
-    setTimeout(function(){
+app.post('/keyToggle-space',function(req,res){
+    if(space_state === "up"){
+        console.log("key-space down")
+        robot.keyToggle("space","down")
+        space_state = "down"
+    }else if(space_state === "down"){
+        console.log("key-space up")
         robot.keyToggle("space","up")
-    },req.body.holdTime)
+        space_state = "up"
+    }
     res.end()
 })
 
-
-app.post('/keyHold-shift',function(req,res){
-    console.log("Hold key-shift for",req.body.holdTime,"ms")
-    robot.keyToggle("shift","down")
-    setTimeout(function(){
+app.post('/keyToggle-shift',function(req,res){
+    if(shift_state === "up"){
+        console.log("key-shift down")
+        robot.keyToggle("shift","down")
+        shift_state = "down"
+    }else if(shift_state === "down"){
+        console.log("key-shift up")
         robot.keyToggle("shift","up")
-    },req.body.holdTime)
+        shift_state = "up"
+    }
     res.end()
 })
 
-
-app.post('/keyHold-ctrl',function(req,res){
-    console.log("Hold key-ctrl for",req.body.holdTime,"ms")
-    robot.keyToggle("control","down")
-    setTimeout(function(){
+app.post('/keyToggle-ctrl',function(req,res){
+    if(ctrl_state === "up"){
+        console.log("key-ctrl down")
+        robot.keyToggle("control","down")
+        ctrl_state = "down"
+    }else if(ctrl_state === "down"){
+        console.log("key-ctrl up")
         robot.keyToggle("control","up")
-    },req.body.holdTime)
+        ctrl_state = "up"
+    }
     res.end()
 })
-
 
     
 // listen
