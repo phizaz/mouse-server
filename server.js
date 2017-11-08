@@ -33,10 +33,30 @@ app.post('/left-click', (req, res) => {
     res.end()
 })
 
+app.post('/left-clickDown',function(req,res){
+    console.log('left click down')
+    robot.mouseToggle("down","left")
+})
+
+app.post('/left-clickUp',function(req,res){
+    console.log('left click up')
+    robot.mouseToggle("up","left")
+})
+
 app.post('/right-click', (req, res) => {
     console.log('right click')
     robot.mouseClick('right')
     res.end()
+})
+
+app.post('/right-clickDown',function(req,res){
+    console.log('right click down')
+    robot.mouseToggle("down","right");
+})
+
+app.post('/right-clickUp',function(req,res){
+    console.log('right click up')
+    robot.mouseToggle("up","right")
 })
 
 
