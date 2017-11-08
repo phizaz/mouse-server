@@ -68,10 +68,6 @@ app.post('/right-clickToggle',function(req,res){
     res.end()
 })
 
-app.post('/right-clickUp',function(req,res){
-    
-    res.end()
-})
 
 
 // set toggle variable
