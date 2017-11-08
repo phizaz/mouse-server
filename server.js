@@ -36,11 +36,13 @@ app.post('/left-click', (req, res) => {
 app.post('/left-clickDown',function(req,res){
     console.log('left click down')
     robot.mouseToggle("down","left")
+    res.end()
 })
 
 app.post('/left-clickUp',function(req,res){
     console.log('left click up')
     robot.mouseToggle("up","left")
+    res.end()
 })
 
 app.post('/right-click', (req, res) => {
@@ -52,11 +54,13 @@ app.post('/right-click', (req, res) => {
 app.post('/right-clickDown',function(req,res){
     console.log('right click down')
     robot.mouseToggle("down","right");
+    res.end()
 })
 
 app.post('/right-clickUp',function(req,res){
     console.log('right click up')
     robot.mouseToggle("up","right")
+    res.end()
 })
 
 
