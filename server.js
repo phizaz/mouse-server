@@ -11,8 +11,8 @@ app.use('/', express.static('public'))
 
 app.post('/move-to', (req, res) => {
     const { x, y } = req.body
-    console.log(`moving cursor to (${x}, ${y})`)
-    robot.moveMouseSmooth(x | 0, y | 0)
+    console.log(`moving cursor to (x: ${x}, y: ${y})`)
+    robot.moveMouse(x | 0, y | 0)
     res.end()
 })
 
@@ -20,8 +20,8 @@ app.post('/move-by', (req, res) => {
     const { x, y } = req.body
     const mouse = robot.getMousePos()
     const [xx, yy] = [(mouse.x | 0) + (x | 0), (mouse.y | 0) + (y | 0)]
-    console.log(`moving cursor by (${x}, ${y}) from (${mouse.x}, ${mouse.y}) to (${xx}, ${yy})`)
-    robot.moveMouseSmooth(xx, yy)
+    console.log(`moving cursor by (x: ${x}, y: ${y}) from (x: ${mouse.x}, y: ${mouse.y}) to (x: ${xx}, y: ${yy})`)
+    robot.moveMouse(xx, yy)
     res.end()
 })
 
@@ -34,6 +34,13 @@ app.post('/left-click', (req, res) => {
 app.post('/right-click', (req, res) => {
     console.log('right click')
     robot.mouseClick('right')
+    res.end()
+})
+
+app.post('/scroll-by', (req, res) => {
+    const { v, h } = req.body
+    console.log(`scroll by (horz: ${h}, vert: ${v})`)
+    robot.scrollMouse(v | 0, h | 0)
     res.end()
 })
 

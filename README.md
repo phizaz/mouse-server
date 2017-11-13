@@ -78,7 +78,7 @@ You can try by accessing `http://<ip>:<port>/`, it has a nice testing page check
 
 ## API List
 
-Always use header `Content-Type: application/x-www-form-urlencoded` for makeing any POST request.
+Always use header `Content-Type: application/x-www-form-urlencoded` for making any POST request.
 
 ### POST /move-to
 
@@ -109,6 +109,14 @@ Return: none
 ```
 Desc: perform the right click
 Input: none
+Return: none
+```
+
+### POST /scroll-by
+
+```
+Desc: perform the mouse scrolling
+Input: v, h (vertical and horizontal respectively)
 Return: none
 ```
 

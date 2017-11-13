@@ -19,37 +19,64 @@
 
         <h1>Test if it is working!</h1>
 
-        <table>
-            <tr>
-                <td></td>
-                <td>
-                    <button id="up" class="btn btn-default" onmousedown="startHold(up)" onmouseup="endHold(up)">UU</button>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <button id="left" class="btn btn-default" onclick="left()">LL</button>
-                </td>
-                <td>
-                    <button id="down" class="btn btn-default" onclick="down()">DD</button>
-                </td>
-                <td>
-                    <button id="right" class="btn btn-default" onclick="right()">RR</button>
-                </td>
-            </tr>
-            <tr>
-            </tr>
-            <tr>
-                <td>
-                    <button id="lclick" class="btn btn-default" onclick="leftClick()">LC</button>
-                </td>
-                <td></td>
-                <td>
-                    <button id="rclick" class="btn btn-default" onclick="rightClick()">RC</button>
-                </td>
-            </tr>
-        </table>
+        <div>
+            <h4>Scroll Mouse</h4>
+            <table>
+                <tr>
+                    <td>
+                        <button id="scroll-up" class="btn btn-default" onclick="scrollUp()">SU</button>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <button id="scroll-down" class="btn btn-default" onclick="scrollDown()">SD</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div>
+            <h4>Keyboard Control</h4>
+            <table>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <button id="up" class="btn btn-default" onmousedown="startHold(up)" onmouseup="endHold(up)">UU</button>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="left" class="btn btn-default" onclick="left()">LL</button>
+                    </td>
+                    <td>
+                        <button id="down" class="btn btn-default" onclick="down()">DD</button>
+                    </td>
+                    <td>
+                        <button id="right" class="btn btn-default" onclick="right()">RR</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <h4>Mouse Clicks</h4>
+            <table>
+                <tr>
+                    <td>
+                        <button id="lclick" class="btn btn-default" onclick="leftClick()">LC</button>
+                    </td>
+                    <td></td>
+                    <td>
+                        <button id="rclick" class="btn btn-default" onclick="rightClick()">RC</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
     </div>
 
     <script>
@@ -74,7 +101,22 @@
             })
         }
 
-        const dist = 10
+        function scrollBy(v, h) {
+            console.log(`scroll by ${v} ${h}`)
+            $.post('scroll-by', { v, h }, () => {
+                console.log(`okay (${v}, ${h})`)
+            })
+        }
+
+        const dist = 15
+
+        function scrollUp() {
+            scrollBy(50, 0)
+        }
+
+        function scrollDown() {
+            scrollBy(-50, 0)
+        }
 
         function up() {
             moveBy(0, -dist * 2 / 3)
@@ -159,8 +201,8 @@
 
 
     <div class="container">
-        <h1>Mouse Server API v1.0
-            <small>revised date: 31 Oct 2017</small>
+        <h1>Mouse Server API v2.0
+            <small>revised date: 13 Nov 2017</small>
         </h1>
 
         <h2>To Control the mouse</h2>
@@ -191,6 +233,13 @@
         <p>Return: none</p>
         <p>
             perform the right click
+        </p>
+
+        <h3>POST /scroll-by</h3>
+        <p>Input: v, h</p>
+        <p>Return: none</p>
+        <p>
+            perform the mouse scrolling in vertical or horizontal axes.
         </p>
 
     </div>
